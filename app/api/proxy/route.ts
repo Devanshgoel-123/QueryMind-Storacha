@@ -4,7 +4,7 @@ export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
 
-    const response = await fetch("http://localhost:3001/rest", {
+    const response = await fetch("https://5507-164-52-202-62.ngrok-free.app/rest", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
