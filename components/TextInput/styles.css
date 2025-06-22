@@ -87,3 +87,10 @@ textarea.input-field {
   flex-direction: column;
   justify-content: space-between;
 }
+
+@media (max-width: 768px) {
+  .textWrapper{
+    gap: 20px;
+    min-height: 400px;
+  }
+}
