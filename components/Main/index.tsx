@@ -60,7 +60,6 @@ export const MainComponent=() =>{
         </div>
         <div className="interface-wrapper">
         <div className="messages-container">
-          <div className="welcome-message">
             <div className="welcome-content">
               <div className="imageContainer">
               <Image className="welcome-icon" src={"/queryMind.png"} height={35} width={35} alt="iamge"/>
@@ -82,7 +81,6 @@ export const MainComponent=() =>{
                 </div>
               </div>
             </div>
-          </div>
         </div>
         <div className="input-area">
           <div className="input-container">
