@@ -221,7 +221,6 @@ body {
   background: rgba(255, 165, 0, 0.6);
 }
 
-/* Responsive Design */
 @media (max-width: 768px) {
   .header-content {
     flex-direction: row;
@@ -240,7 +239,6 @@ body {
 
   .welcome-content {
     padding: 30px 20px;
-    margin: 0 10px;
   }
 
   .welcome-content h2 {
@@ -264,11 +262,13 @@ body {
   }
 
 .messages-container {
-  width: 100%;
   padding: 20px 0;
+  width: auto;
   display: flex;
   flex-direction: column;
-  overflow: auto;
+  overflow-y: auto;
+  overflow-x: hidden;
+  height: 400px;
 }
 
 .input-area {
