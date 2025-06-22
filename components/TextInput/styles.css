@@ -92,5 +92,7 @@ textarea.input-field {
   .textWrapper{
     gap: 20px;
     min-height: 400px;
+    padding-inline: 15px;
+
   }
 }

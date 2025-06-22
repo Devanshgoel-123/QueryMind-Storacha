@@ -5,6 +5,7 @@ import TextInput from "@/components/TextInput"
 import FileUpload from "@/components/FileUpload"
 import AudioInput from "@/components/AudioInput"
 import "./styles.css"
+import Image from "next/image"
 
 type InputType = "text" | "file" | "audio"
 
@@ -61,8 +62,10 @@ export const MainComponent=() =>{
         <div className="messages-container">
           <div className="welcome-message">
             <div className="welcome-content">
-              <div className="welcome-icon">🤖</div>
-              <h2>Welcome to AI Assistant</h2>
+              <div className="imageContainer">
+              <Image className="welcome-icon" src={"/queryMind.png"} height={35} width={35} alt="iamge"/>
+              </div>
+              <h2>Welcome to QueryMind</h2>
               <p>Choose your input method above and start interacting with the AI.</p>
               <div className="feature-list">
                 <div className="feature-item">

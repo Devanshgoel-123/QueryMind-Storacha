@@ -129,10 +129,19 @@ body {
   backdrop-filter: blur(10px);
 }
 
+.imageContainer{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 10px;
+}
+
 .welcome-icon {
   font-size: 4rem;
-  margin-bottom: 20px;
   filter: drop-shadow(0 0 20px rgba(255, 165, 0, 0.3));
+  border-radius: 50%;
 }
 
 .welcome-content h2 {
