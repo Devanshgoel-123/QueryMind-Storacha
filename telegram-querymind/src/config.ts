@@ -10,5 +10,5 @@ export const CHROMA_HOST       = '127.0.0.1';
 export const CHROMA_PORT       = 8000;
 export const CHROMA_COLLECTION = 'rag_chunks';
 export const TOP_K             = 5;
-export const CHUNK_SIZE     = 10000;   
+export const CHUNK_SIZE     = 25000;   
 

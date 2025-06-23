@@ -68,28 +68,32 @@ export async function uploadChunk(
 
   const payload = JSON.parse(result.content[0].text) as any;
 
-  // 🛡️ added safety checks:
-  if (!payload.files || Object.keys(payload.files).length === 0) {
-    throw new Error(`RPC upload returned no files: ${JSON.stringify(payload)}`);
-  }
-  if (!payload.root || !payload.root['/']) {
-    throw new Error(`RPC upload missing rootCid: ${JSON.stringify(payload)}`);
-  }
+  // 🔒 Robust error checks
+  const files = payload.files as Record<string, { '/': string }> | undefined;
+  const rootCid = payload?.root?.['/'];
 
-  const files   = payload.files as Record<string, { '/': string }>;
-  const rootCid = payload.root['/'] as string;
-
-  if (!files[filename] || !files[filename]['/']) {
-    throw new Error(
-      `RPC upload missing CID for '${filename}': ${JSON.stringify(files)}`
-    );
+  if (!files || Object.keys(files).length === 0) {
+    throw new Error(`🚫 RPC upload returned no files: ${JSON.stringify(payload)}`);
   }
 
-  const fileCid = files[filename]['/'];
+  if (!rootCid) {
+    throw new Error(`🚫 RPC upload missing rootCid: ${JSON.stringify(payload)}`);
+  }
+
+  
+  const fallbackEntry = Object.entries(files)[0]; // first valid file entry
+  const fallbackCid = fallbackEntry?.[1]?.['/'];
+
+  const fileCid = files[filename]?.['/'] || fallbackCid;
+
+  if (!fileCid) {
+    throw new Error(`🚫 RPC upload missing CID for '${filename}' and no fallback found: ${JSON.stringify(files)}`);
+  }
 
   console.log(`📥 [MCP] uploaded '${filename}' → fileCid=${fileCid}, rootCid=${rootCid}`);
   return { fileCid, rootCid, filename };
 }
+
 
 export async function fetchChunk(
   fileCid: string,

@@ -8,7 +8,7 @@ async function main() {
     process.exit(1);
   }
 
-  const MCP_REST_URL = process.env.MCP_REST_URL || 'https://51fc-164-52-202-62.ngrok-free.app/rest';
+  const MCP_REST_URL = process.env.MCP_REST_URL || 'https://b842-164-52-202-62.ngrok-free.app/rest';
   const filepath     = `${fileCid}/${filename}`;
   console.log(`🔗 Retrieving via MCP REST at ${MCP_REST_URL}`);
   console.log(`📂 Filepath: ${filepath}\n`);
