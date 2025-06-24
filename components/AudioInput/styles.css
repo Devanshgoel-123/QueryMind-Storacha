@@ -1,0 +1,133 @@
+.audio-input-container {
+  height: 100%;
+}
+
+.recording-area {
+  border: 1px solid rgba(255, 165, 0, 0.3);
+}
+
+
+.mic-icon {
+  display: flex;
+  justify-content: center;
+}
+
+.mic-span{
+  background: rgba(255, 165, 0, 0.1);
+  padding: 20px;
+  font-size: 40px;
+  transition: all 0.3s ease;
+  border-radius:32px;
+  border: 2px solid rgba(255, 165, 0, 0.3);
+}
+
+
+&.recording .mic-icon {
+  background: rgba(255, 165, 0, 0.2);
+  border-color: rgba(255, 165, 0, 0.6);
+  box-shadow: 0 0 30px rgba(255, 165, 0, 0.4);
+}
+
+.pulse-ring {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 120%;
+  height: 120%;
+  border: 2px solid rgba(255, 165, 0, 0.6);
+  border-radius: 50%;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1.5);
+    opacity: 0;
+  }
+}
+
+.record-btn {
+  font-size: 1.1rem;
+  padding: 1rem 2rem;
+  border-radius: 2rem;
+}
+
+.stop-btn {
+  background: rgba(239, 68, 68, 0.8);
+  border-color: rgba(239, 68, 68, 0.5);
+  color: white;
+
+  &:hover {
+    background: rgba(239, 68, 68, 0.9);
+  }
+}
+
+.audio-preview {
+  animation: fadeInUp 0.3s ease-out;
+}
+
+.audio-player {
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 0.5rem;
+
+  &::-webkit-media-controls-panel {
+    background-color: rgba(0, 0, 0, 0.8);
+  }
+
+  &::-webkit-media-controls-play-button,
+  &::-webkit-media-controls-pause-button {
+    background-color: rgba(255, 165, 0, 0.8);
+    border-radius: 50%;
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.formContainer{
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
+}
+
+
+.submitButton{
+  display: flex;
+  flex-direction: row;
+  padding: 12px 18px;
+  background-color: black;
+  border: 1px solid  #ffa50033;
+  background-color: rgb(186, 95, 21);
+  border-radius: 12px;
+  font-weight: 800;
+  justify-content: center;
+  align-items: center;
+}
+
+.buttonWrapper{
+  display: flex;
+  flex-direction: row;
+  gap: 15px;
+}
+
+.recording-container{
+  display: flex;
+  flex-direction: column;
+  border-radius: 12px;
+  gap: 20px;
+  font-weight: 800;
+}
