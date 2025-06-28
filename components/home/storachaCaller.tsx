@@ -4,9 +4,9 @@ import { callStorachaServer } from "@/lib/storacha";
 import { Button } from "../ui/button";
 
 export default function StorachaCaller() {
-  const [args, setArgs] = useState<string>("{}"); // JSON string for arguments
-  const [data, setData] = useState<string>(""); // User-provided data
-  const [fileName, setFileName] = useState<string>("data.txt"); // File name for upload
+  const [args, setArgs] = useState<string>("{}");
+  const [data, setData] = useState<string>("");
+  const [fileName, setFileName] = useState<string>("data.txt");
   const [result, setResult] = useState<any | null>(null);
   const [fetchedData, setFetchedData] = useState<any | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -14,16 +14,11 @@ export default function StorachaCaller() {
   const handleStoreData = async () => {
     try {
       setError(null);
-
-      // Encode the user-provided data
       const encoded = btoa(decodeURIComponent(encodeURIComponent(data)));
-
-      // Prepare arguments for the server call
       const parsedArgs = JSON.parse(args);
       const uploadArgs = { ...parsedArgs, file: encoded, name: fileName };
 
-      // Call the server to upload the data
-      const uploadRes = await callStorachaServer('upload', uploadArgs);
+      const uploadRes = await callStorachaServer("upload", uploadArgs);
       console.log("Upload Result:", uploadRes);
 
       if (uploadRes) {
@@ -39,11 +34,7 @@ export default function StorachaCaller() {
   const fetchData = async () => {
     try {
       setError(null);
-
-      // Prepare arguments for the server call
-      const fetchArgs = `${result.root['/']}/${fileName}`;
-
-      // Call the server to retrieve the data
+      const fetchArgs = `${result.root["/"]}/${fileName}`;
       const fetchRes = await callStorachaServer("retrieve", { filepath: fetchArgs });
       console.log("Fetch Result:", fetchRes);
 
@@ -55,50 +46,62 @@ export default function StorachaCaller() {
     } catch (err: any) {
       setError(err.message || "An error occurred while retrieving data.");
     }
-  }
+  };
 
   useEffect(() => {
-    // Fetch data when the component mounts
-    fetchData();
+    if (result) fetchData();
   }, [result]);
 
   return (
-    <div>
-      <h1>Storacha Server Caller</h1>
-      <div>
-        <label>
-          File Name:
+    <div className="max-w-3xl mx-auto p-6 bg-white dark:bg-zinc-900 rounded-2xl shadow-md space-y-6">
+      <h1 className="text-2xl font-bold text-zinc-900 dark:text-white">Storacha Server Caller</h1>
+
+      <div className="space-y-4">
+        <label className="block">
+          <span className="text-sm font-medium text-zinc-700 dark:text-zinc-300">File Name:</span>
           <input
             type="text"
+            className="w-full mt-1 p-2 border rounded-lg dark:bg-zinc-800 dark:text-white"
             value={fileName}
+            onChange={(e) => setFileName(e.target.value)}
             placeholder="Enter file name (e.g., data.txt)"
           />
         </label>
-      </div>
-      <div>
-        <label>
-          Data to Store:
+
+        <label className="block">
+          <span className="text-sm font-medium text-zinc-700 dark:text-zinc-300">Data to Store:</span>
           <textarea
+            className="w-full mt-1 p-2 border rounded-lg h-32 resize-y dark:bg-zinc-800 dark:text-white"
             value={data}
             onChange={(e) => setData(e.target.value)}
             placeholder="Enter the data you want to store"
           />
         </label>
+
+        <Button className="mt-2" onClick={handleStoreData}>
+          Store Data
+        </Button>
+
+        {error && <p className="text-red-500 font-medium">Error: {error}</p>}
+
+        {result && (
+          <div>
+            <h2 className="text-lg font-semibold text-zinc-800 dark:text-zinc-100 mt-4">Upload Result:</h2>
+            <pre className="bg-zinc-100 dark:bg-zinc-800 p-4 rounded-xl overflow-auto text-sm text-zinc-800 dark:text-white">
+              {JSON.stringify(result, null, 2)}
+            </pre>
+          </div>
+        )}
+
+        {fetchedData && (
+          <div>
+            <h2 className="text-lg font-semibold text-zinc-800 dark:text-zinc-100 mt-4">Fetched Data:</h2>
+            <pre className="bg-zinc-100 dark:bg-zinc-800 p-4 rounded-xl overflow-auto text-sm text-zinc-800 dark:text-white">
+              {atob(fetchedData.data)}
+            </pre>
+          </div>
+        )}
       </div>
-      <Button onClick={handleStoreData}>Store Data</Button>
-      {error && <p style={{ color: "red" }}>Error: {error}</p>}
-      {result && (
-        <div>
-          <h2>Result:</h2>
-          <pre>{JSON.stringify(result)}</pre>
-        </div>
-      )}
-      {fetchedData ? (
-        <div>
-          <h2>Result:</h2>
-          <pre>{atob(fetchedData.data)}</pre>
-        </div>
-      ) : <></>}
     </div>
   );
 }
