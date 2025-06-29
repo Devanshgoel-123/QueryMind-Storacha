@@ -1,0 +1,1 @@
+export const LOGO='/queryMind.png'
