@@ -3,7 +3,6 @@
 import type React from "react";
 import { useState, useRef, useEffect } from "react";
 import "./styles.css";
-import axios from "axios";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { RxCross1 } from "react-icons/rx";
@@ -69,10 +68,10 @@ export const AgentChat = () => {
     setSend(false);
 
     try {
-      await axios.post(`${process.env.NEXT_PUBLIC_SERVER_URL_AXIOS}/message`, {
-        text: tempMessage,
-        agentId: "QueryMind"
-      });
+      // await axios.post(`${process.env.NEXT_PUBLIC_SERVER_URL_AXIOS}/message`, {
+      //   text: tempMessage,
+      //   agentId: "QueryMind"
+      // });
     } catch (err) {
       const errorMessage: Message = {
         id: Date.now().toString(),

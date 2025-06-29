@@ -1,36 +1,83 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# QueryMind
 
-## Getting Started
+**QueryMind** is an intelligent file-based knowledge querying system where users can upload audio files, text, or documents, and later ask questions based on the stored knowledge. Powered by vector embeddings and storage infrastructure, it allows seamless interaction both via web and Telegram.
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## Features
+
+* Upload audio, text, and general files
+* Extract and store knowledge from files using vector embeddings
+* Ask questions and get intelligent answers based on uploaded content
+* Telegram bot integration for remote access and interaction
+* Built with **Next.js**, **ChromaDB**, and **Storacha MCP**
+
+---
+
+## 🧱 Tech Stack
+
+* **Next.js** – Web interface and server-side logic
+* **ChromaDB** – Vector database to store and query embeddings
+* **Storacha MCP Server** – For secure file storage and handling
+* **Telegram Bot API** – For conversational interface via Telegram
+
+---
+
+## 📂 File Handling
+
+* Users can upload:
+  * `.txt`, `.md` (Text files)
+  * `.pdf`, `.docx`, and other document formats
+* Assets are stored in the `/public` directory
+
+---
+
+## 🛠️ Environment Variables
+
+Create a `.env` file in the root with the following:
+
+```env
+MCP_SERVER_URL=<Your MCP server endpoint>
+CHROMA_DB_URL=<Your ChromaDB endpoint>
+TELEGRAM_BOT_TOKEN=<Your Telegram Bot token>
+TELEGRAM_CHAT_ID=<Allowed chat ID or admin>
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 🧪 Local Development
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+git clone https://github.com/yourusername/querymind.git
+pnpm install
+npm run dev
+```
 
-## Learn More
+Visit [http://localhost:3000](http://localhost:3000)
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 🤖 Telegram Integration
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+* The Telegram bot allows users to interact with the stored knowledge from their devices.
+* Make sure to deploy the bot backend and keep it running for real-time responses.
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 📸 Screenshots
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+> Add screenshots/gifs in the `public/` folder and display them here
+
+```md
+![alt text](image.png)
+![Query UI](./public/screenshots/query.png)
+```
+
+---
+
+## 📄 License
+
+MIT License
+
+---
+

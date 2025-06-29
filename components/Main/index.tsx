@@ -7,7 +7,6 @@ import AudioInput from "@/components/AudioInput"
 import "./styles.css"
 import Image from "next/image"
 import { useRouter } from "next/navigation"
-import { handleTextUpload } from "@/telegram-querymind/src/bot"
 type InputType = "text" | "file" | "audio"
 
 export const MainComponent=() =>{
@@ -20,7 +19,7 @@ export const MainComponent=() =>{
     setIsProcessing(true)
     try {
      if(fileType==="text"){
-      await handleTextUpload(data)
+      // await handleTextUpload(data)
      }else if(fileType==="file"){
       
      }
