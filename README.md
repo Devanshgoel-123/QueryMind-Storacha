@@ -64,14 +64,12 @@ Visit [http://localhost:3000](http://localhost:3000)
 
 ---
 
-## 📸 Screenshots
+## Demo:
 
-> Add screenshots/gifs in the `public/` folder and display them here
+![alt text](image-1.png)
+---
 
-```md
-![alt text](image.png)
-![Query UI](./public/screenshots/query.png)
-```
+![alt text](image-2.png)
 
 ---
 
