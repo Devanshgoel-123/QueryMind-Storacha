@@ -1,11 +1,15 @@
-import { ChromaClient, QueryResult, Metadata } from 'chromadb';
 import {
-  CHROMA_HOST,
-  CHROMA_PORT,
+  CloudClient,
+  QueryResult,
+  Metadata,
+} from 'chromadb';
+import {
+  CHROMA_API_KEY,
+  CHROMA_TENANT,
+  CHROMA_DATABASE,
   CHROMA_COLLECTION,
   TOP_K,
 } from './config';
-
 
 export interface ChunkMetadata extends Metadata {
   rootCid:  string;
@@ -13,10 +17,10 @@ export interface ChunkMetadata extends Metadata {
   summary:  string;
 }
 
-const chroma = new ChromaClient({
-  host: CHROMA_HOST,
-  port: CHROMA_PORT,
-  ssl:  false,
+const chroma = new CloudClient({
+  apiKey:  CHROMA_API_KEY,
+  tenant:  CHROMA_TENANT,
+  database: CHROMA_DATABASE,
 });
 
 async function getOrCreate() {
@@ -36,22 +40,24 @@ async function getOrCreate() {
 
 const collectionPromise = getOrCreate();
 
-
 export async function upsertChunkEmbedding(
   cid: string,
   embedding: number[],
   metadata: ChunkMetadata
 ): Promise<void> {
   const col = await collectionPromise;
-  console.log(
-    `🔨 ChromaDB: adding CID=${cid}, rootCid=${metadata.rootCid}, file=${metadata.filename}`
-  );
-  await col.add({
-    ids:        [cid],
-    embeddings: [embedding],
-    metadatas:  [metadata],
-    documents:  [metadata.summary],
-  });
+  console.log(`🔨 ChromaDB: adding CID=${cid}, rootCid=${metadata.rootCid}, file=${metadata.filename}`);
+  const shortSummary = metadata.summary.slice(0, 200); // truncate to avoid 256B limit
+await col.add({
+  ids:        [cid],
+  embeddings: [embedding],
+  metadatas:  [{
+    ...metadata,
+    summary: shortSummary,
+  }],
+  documents:  [shortSummary],
+});
+
   console.log(`✅ ChromaDB: indexed CID=${cid}`);
 }
 
@@ -59,9 +65,7 @@ export async function querySimilarEmbeddings(
   vector: number[]
 ): Promise<QueryResult<ChunkMetadata>> {
   const col = await collectionPromise;
-  console.log(
-    `🔍 ChromaDB: querying top ${TOP_K} with vector length ${vector.length}`
-  );
+  console.log(`🔍 ChromaDB: querying top ${TOP_K} with vector length ${vector.length}`);
   const res = await col.query({
     queryEmbeddings: [vector],
     nResults:        TOP_K,
