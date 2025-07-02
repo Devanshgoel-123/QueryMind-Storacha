@@ -6,21 +6,27 @@ import FileUpload from "@/components/FileUpload"
 import AudioInput from "@/components/AudioInput"
 import "./styles.css"
 import Image from "next/image"
-
+import { useRouter } from "next/navigation"
+import { handleTextUpload } from "@/telegram-querymind/src/bot"
 type InputType = "text" | "file" | "audio"
 
 export const MainComponent=() =>{
   const [selectedType, setSelectedType] = useState<InputType>("text")
   const [isProcessing, setIsProcessing] = useState(false)
+  const [hovered, setHovered] = useState(false);
+  const router=useRouter();
 
   const handleDataSubmit = async (data: any, fileType: string) => {
     setIsProcessing(true)
     try {
-      // await storeData(data, fileType)
-      // Handle success (you can add success feedback here)
+     if(fileType==="text"){
+      await handleTextUpload(data)
+     }else if(fileType==="file"){
+      
+     }
     } catch (error) {
       console.error("Error storing data:", error)
-      // Handle error (you can add error feedback here)
+     
     } finally {
       setIsProcessing(false)
     }
@@ -37,7 +43,21 @@ export const MainComponent=() =>{
       <div className="chat-interface">
         <div className="chat-header">
           <div className="header-content">
-            <h1 className="app-title">AI Assistant</h1>
+            <h1 className="app-title">Query Mind Assistant</h1>
+            <div className="app-title" 
+             style={{
+              color: hovered ? "#ff8c00" : "orange",
+              transition: "color 0.2s ease",
+              cursor:"pointer"
+            }}
+            onMouseEnter={() => setHovered(true)}
+            onMouseLeave={() => setHovered(false)}
+            onClick={()=>{
+              router.push('/Chat')
+            }}
+            >
+              Chat
+            </div>
             <div className="input-selector">
               <label htmlFor="input-type" className="selector-label">
                 Input Type:

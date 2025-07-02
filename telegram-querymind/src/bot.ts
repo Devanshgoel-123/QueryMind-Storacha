@@ -164,9 +164,12 @@ for (const { meta } of candidates) {
 });
 
 // Shared chunk handler
-async function handleTextUpload(text: string, ctx: Scenes.WizardContext) {
+export async function handleTextUpload(text: string, ctx?: Scenes.WizardContext) {
   const chunks = chunkText(text);
-  await ctx.reply(`🚀 Uploading ${chunks.length} chunk(s)…`);
+  if(ctx){
+    await ctx?.reply(`🚀 Uploading ${chunks.length} chunk(s)…`);
+  }
+  
 
   await Promise.all(chunks.map(async (chunk, i) => {
     const filename = `chunk_${Date.now()}_${i}.txt`;
@@ -177,13 +180,18 @@ async function handleTextUpload(text: string, ctx: Scenes.WizardContext) {
 
     await upsertChunkEmbedding(fileCid, embedding, { rootCid, filename, summary });
 
-    await ctx.reply(
-      `✅ Uploaded chunk ${i + 1}/${chunks.length}\n• CID: \`${fileCid}\`\n• root: \`${rootCid}\``,
-      { parse_mode: 'MarkdownV2' }
-    );
+    if(ctx){
+      await ctx?.reply(
+        `✅ Uploaded chunk ${i + 1}/${chunks.length}\n• CID: \`${fileCid}\`\n• root: \`${rootCid}\``,
+        { parse_mode: 'MarkdownV2' }
+      );
+    }
+   
   }));
 
-  await ctx.reply('🎉 All chunks uploaded & indexed!');
+  if(ctx){
+    await ctx?.reply('🎉 All chunks uploaded & indexed!');
+  }
 }
 
 bot.launch();
