@@ -19,14 +19,14 @@ export const useSocketConnection = () => {
     message: undefined,
   });
 
-  const socketURL = process.env.NEXT_PUBLIC_SERVER_URL;
+   const socketURL = "";
   useEffect(() => {
     if (!socketURL) {
       console.error("WebSocket URL not defined");
       return;
     }
     const socket_connections: Socket = io(
-      `${process.env.NEXT_PUBLIC_SERVER_URL}`,
+      ``,
       {
         transports: ["websocket"],
       }
